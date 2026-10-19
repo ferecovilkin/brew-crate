@@ -130,6 +130,13 @@ never crashes because of a missing key.
 
 You can also register your own account from the sign-up page.
 
+## Stuck, or grading someone else's work?
+
+The exploit steps and fixes for every embedded flaw live in
+[`SOLUTIONS.md`](SOLUTIONS.md) — it's the answer key for instructors and for
+when you're genuinely stuck, not a spoiler to read first. Try finding the bugs
+on your own before opening it.
+
 ## Security notice
 
 **BrewCrate is intentionally vulnerable.** Please treat it accordingly:
