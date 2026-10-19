@@ -17,7 +17,7 @@
     "ejs",
     "sqlite"
   ],
-  "author": "",
+  "author": "İlkin Fərəcov (https://github.com/ferecovilkin)",
   "license": "MIT",
   "engines": {
     "node": ">=18"
