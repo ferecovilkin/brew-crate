@@ -17,6 +17,14 @@ the OWASP API Security Top 10, so students, CTF players, and penetration testers
 can practice finding and exploiting vulnerabilities against a codebase that
 behaves like a real app rather than a checklist of toy bugs.
 
+<p align="center">
+  <img src="docs/screenshots/homepage.jpg" alt="BrewCrate home page" width="49%">
+  <img src="docs/screenshots/products.jpg" alt="BrewCrate product catalog" width="49%">
+</p>
+<p align="center">
+  <img src="docs/screenshots/admin.jpg" alt="BrewCrate admin dashboard" width="98%">
+</p>
+
 ---
 
 ## Features
