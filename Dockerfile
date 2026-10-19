@@ -1,11 +1,18 @@
 # BrewCrate — local training sandbox image
-FROM node:20-bookworm-slim
+FROM node:22-bookworm-slim
 
 WORKDIR /app
 
+# Build tools as a fallback in case better-sqlite3 has no prebuilt binary
+# for this Node version and has to compile from source.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends python3 make g++ \
+ && rm -rf /var/lib/apt/lists/*
+
 # Install dependencies first to leverage layer caching.
-COPY package.json ./
-RUN npm install --omit=dev
+# Copy the lockfile too so builds are reproducible.
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 
 # Copy the rest of the application.
 COPY . .
