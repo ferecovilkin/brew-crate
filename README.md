@@ -93,8 +93,20 @@ npm start
 
 Then open **http://127.0.0.1:3000**.
 
+The demo database is created automatically on first start, so step 2 is
+optional. Run `npm run seed` any time you want to reset it to a clean state.
+
 By default the server binds to `127.0.0.1` only. You can override the host/port
-with the `HOST` and `PORT` environment variables.
+with the `HOST` and `PORT` environment variables. If port 3000 is already in
+use, pick another one:
+
+```bash
+PORT=3001 npm start            # macOS / Linux / Git Bash
+```
+
+```powershell
+$env:PORT = 3001; npm start    # Windows PowerShell
+```
 
 ### Run with Docker
 
@@ -112,7 +124,12 @@ BrewBot works out of the box in offline mode. To enable live answers, set an
 OpenAI-compatible API key before starting the server:
 
 ```bash
-export OPENAI_API_KEY=sk-...   # optional
+export OPENAI_API_KEY=sk-...   # macOS / Linux / Git Bash
+npm start
+```
+
+```powershell
+$env:OPENAI_API_KEY = "sk-..."   # Windows PowerShell
 npm start
 ```
 

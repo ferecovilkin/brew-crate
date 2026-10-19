@@ -2,6 +2,14 @@ const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
+const db = require('./db/database');
+
+// First run: build the demo database if it has not been seeded yet.
+if (!db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'users'").get()) {
+  console.log('No demo data found, seeding the database...');
+  require('./db/seed');
+}
+
 const { loadUser } = require('./middleware/auth');
 
 const indexRoutes = require('./routes/index');
