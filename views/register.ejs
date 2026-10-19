@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+<section class="section" style="padding-top: 56px;">
+  <div class="wrap">
+    <div class="auth-card panel">
+      <h1 style="font-size: 1.9rem;">Create your account</h1>
+      <p class="muted">Join BrewCrate to order coffee and save your favorites.</p>
+      <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+      <form action="/register" method="post" class="form-grid" style="margin-top: 8px;">
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" value="<%= values.username || '' %>" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" value="<%= values.email || '' %>" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="new-password" required />
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Create account</button>
+      </form>
+      <p class="muted center" style="margin: 18px 0 0;">Already a member? <a href="/login">Sign in</a></p>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

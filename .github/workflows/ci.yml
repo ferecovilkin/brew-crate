@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check source files parse
+        run: node --check server.js && for f in routes/*.js middleware/*.js db/*.js lib/*.js; do node --check "$f"; done
+
+      - name: Seed database
+        run: npm run seed
+
+      - name: Boot smoke test
+        run: |
+          node server.js &
+          SERVER_PID=$!
+          sleep 2
+          curl -fsS http://127.0.0.1:3000/ > /dev/null
+          curl -fsS http://127.0.0.1:3000/products > /dev/null
+          kill $SERVER_PID

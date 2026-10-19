@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / <a href="/admin">Admin</a> / Members</nav>
+  <h1>Members</h1>
+  <p>The team and customer directory.</p>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Joined</th></tr></thead>
+        <tbody>
+          <% users.forEach(function (u) { %>
+            <tr>
+              <td class="mono"><%= u.id %></td>
+              <td><a href="/u/<%= u.username %>"><%= u.username %></a></td>
+              <td><%= u.email %></td>
+              <td><span class="badge-role badge-<%= u.role === 'admin' ? 'admin' : 'customer' %>"><%= u.role %></span></td>
+              <td><%= u.created_at %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

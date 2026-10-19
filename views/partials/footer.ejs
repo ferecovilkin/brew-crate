@@ -1,0 +1,22 @@
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <a class="brand" href="/">
+          <svg class="mark icon" aria-hidden="true"><use href="#i-bean" /></svg>
+          Brew<b>Crate</b>
+        </a>
+        <p class="footer-note">Small-batch coffee, roasted to order and packed in a crate the same week it ships.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/products">Shop all</a>
+        <a href="/search?category=Blends">Blends</a>
+        <a href="/search?category=Decaf">Decaf</a>
+        <a href="/assistant">Ask BrewBot</a>
+        <% if (currentUser) { %><a href="/account">My account</a><% } %>
+      </nav>
+    </div>
+    <div class="lab-note">Training sandbox build — run locally only. Do not expose to the internet or load real data.</div>
+  </footer>
+</body>
+</html>

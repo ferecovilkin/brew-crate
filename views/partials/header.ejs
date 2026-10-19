@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= typeof title !== 'undefined' ? title + ' · BrewCrate' : 'BrewCrate' %></title>
+  <meta name="description" content="BrewCrate — small-batch coffee roasted to order and shipped in a crate." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-bean" viewBox="0 0 24 24"><path d="M5.5 5.5c5 0 8 3 8 8s3 5 5 5c-5 0-9-3-9-8s-2-5-4-5z" fill="currentColor" stroke="none"/><path d="M4 20c4-2 6-5 6-9s2-5 4-6" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2 11.2a1.6 1.6 0 0 0 1.6 1.3h8.4a1.6 1.6 0 0 0 1.6-1.2L21 7H6.2"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-3.8-3.8"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.5 5.7 6.2.6-4.7 4.1 1.4 6.1L12 16.9 6.6 19.6 8 13.4 3.3 9.3l6.2-.6z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="i-steam" viewBox="0 0 24 24"><path d="M8 3c-1.2 1.4-1.2 2.8 0 4.2s1.2 2.8 0 4.2M13 2c-1.2 1.4-1.2 2.8 0 4.2s1.2 2.8 0 4.2M18 4c-1.2 1.4-1.2 2.8 0 4.2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.3 2.9 7.9 7 9 4.1-1.1 7-4.7 7-9V6z"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7 12 3l8.5 4v10L12 21l-8.5-4z"/><path d="M3.5 7 12 11l8.5-4M12 11v10"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">
+        <svg class="mark icon" aria-hidden="true"><use href="#i-bean" /></svg>
+        Brew<b>Crate</b>
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="/products">Shop</a>
+        <a href="/search?category=Single Origin">Single Origin</a>
+        <a href="/search?category=Equipment">Gear</a>
+        <a href="/assistant">Ask BrewBot</a>
+      </nav>
+      <div class="header-actions">
+        <form class="header-search" action="/search" method="get" role="search">
+          <button type="submit" aria-label="Search">
+            <svg class="icon" aria-hidden="true"><use href="#i-search" /></svg>
+          </button>
+          <input type="search" name="q" placeholder="Search beans & gear" aria-label="Search products" />
+        </form>
+        <a class="icon-link" href="/cart" aria-label="Cart">
+          <svg class="icon" aria-hidden="true"><use href="#i-cart" /></svg>
+        </a>
+        <% if (currentUser) { %>
+          <a class="icon-link" href="/account">
+            <svg class="icon" aria-hidden="true"><use href="#i-user" /></svg>
+            <span><%= currentUser.username %></span>
+          </a>
+          <% if (currentUser.role === 'admin') { %>
+            <a class="icon-link" href="/admin">Admin</a>
+          <% } %>
+        <% } else { %>
+          <a class="icon-link" href="/login">
+            <svg class="icon" aria-hidden="true"><use href="#i-user" /></svg>
+            <span>Sign in</span>
+          </a>
+        <% } %>
+      </div>
+    </div>
+  </header>
+  <main>

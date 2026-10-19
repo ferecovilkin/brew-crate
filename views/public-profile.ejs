@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / Members / <%= profile.username %></nav>
+  <h1><%= profile.username %></h1>
+  <p>
+    <span class="badge-role badge-<%= profile.role === 'admin' ? 'admin' : 'customer' %>"><%= profile.role %></span>
+    &nbsp;Member since <%= profile.created_at %>
+  </p>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap" style="max-width: 760px;">
+    <div class="panel">
+      <h3 class="mt-0">About</h3>
+      <% if (profile.bio) { %>
+        <div class="profile-bio"><%= profile.bio %></div>
+      <% } else { %>
+        <p class="muted">This member hasn't written a bio yet.</p>
+      <% } %>
+    </div>
+
+    <div class="panel" style="margin-top: 24px;">
+      <h3 class="mt-0">Reviews by <%= profile.username %></h3>
+      <% if (reviews.length) { %>
+        <% reviews.forEach(function (r) { %>
+          <div class="review">
+            <div class="review-head">
+              <span class="who"><a href="/product/<%= r.slug %>" style="color:inherit;text-decoration:none;"><%= r.product_name %></a></span>
+              <span class="stars" aria-label="<%= r.rating %> out of 5">
+                <% for (var i = 1; i <= 5; i++) { %>
+                  <svg class="icon <%= i <= r.rating ? '' : 'off' %>" aria-hidden="true"><use href="#i-star" /></svg>
+                <% } %>
+              </span>
+            </div>
+            <p style="margin:0;"><%= r.body %></p>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="muted">No reviews yet.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

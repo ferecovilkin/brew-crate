@@ -1,0 +1,41 @@
+<%- include('partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / <a href="/account">Account</a> / Order</nav>
+  <h1>Order <span class="mono"><%= order.reference %></span></h1>
+  <p>Placed <%= order.created_at %> · <span class="chip"><%= order.status %></span></p>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap" style="max-width: 760px;">
+    <div class="panel">
+      <div class="table-wrap" style="border:0;box-shadow:none;">
+        <table class="data">
+          <thead>
+            <tr><th>Item</th><th>Qty</th><th>Unit</th><th>Line total</th></tr>
+          </thead>
+          <tbody>
+            <% items.forEach(function (it) { %>
+              <tr>
+                <td style="white-space:normal;"><%= it.product_name %></td>
+                <td><%= it.quantity %></td>
+                <td class="mono">$<%= (it.unit_cents / 100).toFixed(2) %></td>
+                <td class="mono">$<%= ((it.unit_cents * it.quantity) / 100).toFixed(2) %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <div class="summary" style="margin-top: 18px;">
+        <div class="row"><span>Ship to</span><span><%= order.ship_name %></span></div>
+        <div class="row"><span>Address</span><span><%= order.ship_address %></span></div>
+        <div class="row total"><span>Total paid</span><span class="mono">$<%= (order.total_cents / 100).toFixed(2) %></span></div>
+      </div>
+      <% if (order.invoice_file) { %>
+        <a class="btn btn-ghost" href="/orders/invoice?file=<%= encodeURIComponent(order.invoice_file) %>" style="margin-top: 18px;">Download receipt</a>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

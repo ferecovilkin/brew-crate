@@ -1,0 +1,58 @@
+<%- include('partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / Cart</nav>
+  <h1>Your crate</h1>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap">
+    <% if (!lines.length) { %>
+      <div class="empty">
+        <svg class="bean icon" aria-hidden="true"><use href="#i-cart" /></svg>
+        <h3>Your crate is empty</h3>
+        <p>Add a bag of coffee or a piece of gear and it'll show up here.</p>
+        <a class="btn btn-primary" href="/products">Start shopping</a>
+      </div>
+    <% } else { %>
+      <div class="cart-layout">
+        <div class="panel">
+          <% lines.forEach(function (line) { %>
+            <div class="cart-line">
+              <div class="thumb">
+                <% if (line.product.image_url && line.product.image_url !== '/img/placeholder.svg') { %>
+                  <img src="<%= line.product.image_url %>" alt="<%= line.product.name %>" />
+                <% } else { %>
+                  <svg class="icon" style="width:26px;height:26px;" aria-hidden="true"><use href="#i-bean" /></svg>
+                <% } %>
+              </div>
+              <div class="grow">
+                <strong><a href="/product/<%= line.product.slug %>" style="color:inherit;text-decoration:none;"><%= line.product.name %></a></strong>
+                <div class="muted" style="font-size:0.9rem;">$<%= (line.product.price_cents / 100).toFixed(2) %> each</div>
+              </div>
+              <form class="qty-form" action="/cart/update" method="post">
+                <input type="hidden" name="slug" value="<%= line.product.slug %>" />
+                <input type="number" name="qty" value="<%= line.quantity %>" min="0" max="99" aria-label="Quantity" />
+                <button class="btn btn-ghost btn-sm" type="submit">Update</button>
+              </form>
+              <div class="price" style="min-width:84px;text-align:right;">$<%= (line.subtotal / 100).toFixed(2) %></div>
+              <form action="/cart/remove" method="post">
+                <input type="hidden" name="slug" value="<%= line.product.slug %>" />
+                <button class="btn btn-ghost btn-sm" type="submit" aria-label="Remove">Remove</button>
+              </form>
+            </div>
+          <% }) %>
+        </div>
+        <aside class="panel summary">
+          <h3 class="mt-0">Order summary</h3>
+          <div class="row"><span>Subtotal</span><span>$<%= (total / 100).toFixed(2) %></span></div>
+          <div class="row"><span>Shipping</span><span>Calculated at checkout</span></div>
+          <div class="row total"><span>Total</span><span>$<%= (total / 100).toFixed(2) %></span></div>
+          <a class="btn btn-primary btn-block" href="/checkout" style="margin-top:16px;">Checkout <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+        </aside>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

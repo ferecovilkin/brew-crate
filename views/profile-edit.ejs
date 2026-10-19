@@ -1,0 +1,40 @@
+<%- include('partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / <a href="/account">Account</a> / Edit profile</nav>
+  <h1>Edit profile</h1>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap" style="max-width: 560px;">
+    <div class="panel">
+      <% if (saved) { %><div class="alert alert-ok">Your profile has been updated.</div><% } %>
+      <form action="/account/profile" method="post" class="form-grid">
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" value="<%= profile.username %>" />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" value="<%= profile.email %>" />
+        </div>
+        <div class="field">
+          <label for="bio">Bio</label>
+          <textarea id="bio" name="bio" placeholder="Tell other members how you take your coffee."><%= profile.bio %></textarea>
+          <p class="hint">Shown on your public profile page.</p>
+        </div>
+        <button class="btn btn-primary" type="submit">Save changes</button>
+      </form>
+    </div>
+
+    <% if (profile.bio) { %>
+      <div class="panel" style="margin-top: 22px;">
+        <h3 class="mt-0">Bio preview</h3>
+        <p class="muted" style="font-size:0.88rem;">This is how your bio currently renders.</p>
+        <div class="profile-bio"><%- profile.bio %></div>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

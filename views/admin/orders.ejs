@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / <a href="/admin">Admin</a> / Orders</nav>
+  <h1>Order report</h1>
+  <p><%= orders.length %> order(s) total.</p>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Reference</th><th>Customer</th><th>Ship to</th><th>Status</th><th>Total</th><th>Date</th><th></th></tr></thead>
+        <tbody>
+          <% orders.forEach(function (o) { %>
+            <tr>
+              <td class="mono"><%= o.reference %></td>
+              <td><a href="/u/<%= o.username %>"><%= o.username %></a></td>
+              <td style="white-space:normal;"><%= o.ship_name %></td>
+              <td><span class="chip"><%= o.status %></span></td>
+              <td class="mono">$<%= (o.total_cents / 100).toFixed(2) %></td>
+              <td><%= o.created_at %></td>
+              <td><a href="/orders/<%= o.id %>">View</a></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

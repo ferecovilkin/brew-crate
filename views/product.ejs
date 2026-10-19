@@ -1,0 +1,88 @@
+<%- include('partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / <a href="/products">Shop</a> / <%= product.name %></nav>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap detail-grid">
+    <div class="detail-media">
+      <% if (product.image_url && product.image_url !== '/img/placeholder.svg') { %>
+        <img src="<%= product.image_url %>" alt="<%= product.name %>" />
+      <% } else { %>
+        <svg class="bean icon" aria-hidden="true"><use href="#i-bean" /></svg>
+      <% } %>
+    </div>
+    <div>
+      <span class="product-origin"><%= product.origin %></span>
+      <h1 style="margin-top: 6px;"><%= product.name %></h1>
+      <p class="muted"><%= product.description %></p>
+
+      <dl class="spec-list">
+        <li><dt>Roast</dt><dd><%= product.roast %></dd></li>
+        <li><dt>Category</dt><dd><%= product.category %></dd></li>
+        <li><dt>Tasting notes</dt><dd><%= product.tasting %></dd></li>
+        <li><dt>In stock</dt><dd><%= product.stock > 0 ? product.stock + ' bags' : 'Back soon' %></dd></li>
+      </dl>
+
+      <div class="detail-price">$<%= (product.price_cents / 100).toFixed(2) %></div>
+
+      <form class="add-row" action="/cart/add" method="post">
+        <input type="hidden" name="slug" value="<%= product.slug %>" />
+        <input type="number" name="qty" value="1" min="1" max="99" aria-label="Quantity" style="width: 84px;" />
+        <button class="btn btn-primary" type="submit">
+          <svg class="icon" aria-hidden="true"><use href="#i-cart" /></svg> Add to crate
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 8px;">
+  <div class="wrap" style="max-width: 760px; margin: 0 auto;">
+    <div class="panel">
+      <h2>Customer reviews</h2>
+      <% if (reviews.length) { %>
+        <% reviews.forEach(function (r) { %>
+          <div class="review">
+            <div class="review-head">
+              <span class="who"><a href="/u/<%= r.username %>" style="text-decoration:none;color:inherit;"><%= r.username %></a></span>
+              <span class="stars" aria-label="<%= r.rating %> out of 5">
+                <% for (var i = 1; i <= 5; i++) { %>
+                  <svg class="icon <%= i <= r.rating ? '' : 'off' %>" aria-hidden="true"><use href="#i-star" /></svg>
+                <% } %>
+              </span>
+            </div>
+            <p style="margin:0;"><%- r.body %></p>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="muted">No reviews yet — be the first to brew and tell us about it.</p>
+      <% } %>
+
+      <% if (currentUser) { %>
+        <form action="/product/<%= product.slug %>/review" method="post" style="margin-top: 22px;">
+          <div class="field">
+            <label for="rating">Your rating</label>
+            <select name="rating" id="rating" style="max-width: 160px;">
+              <option value="5">5 — Excellent</option>
+              <option value="4">4 — Good</option>
+              <option value="3">3 — Okay</option>
+              <option value="2">2 — Meh</option>
+              <option value="1">1 — Poor</option>
+            </select>
+          </div>
+          <div class="field" style="margin-top: 12px;">
+            <label for="body">Your review</label>
+            <textarea name="body" id="body" placeholder="How did it brew up?"></textarea>
+          </div>
+          <button class="btn btn-dark" type="submit" style="margin-top: 12px;">Post review</button>
+        </form>
+      <% } else { %>
+        <p class="muted" style="margin-top: 18px;"><a href="/login">Sign in</a> to leave a review.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

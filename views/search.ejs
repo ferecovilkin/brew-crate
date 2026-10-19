@@ -1,0 +1,47 @@
+<%- include('partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / Search</nav>
+  <h1><% if (query) { %>Results for &ldquo;<%- query %>&rdquo;<% } else if (activeCategory) { %><%= activeCategory %><% } else { %>Search the roastery<% } %></h1>
+  <% if (activeCategory) { %><p class="muted">Filtered by <%- activeCategory %></p><% } %>
+</div>
+
+<section class="section" style="padding-top: 20px;">
+  <div class="wrap">
+    <form action="/search" method="get" style="margin-bottom: 26px;">
+      <div class="header-search" style="background: var(--surface); border-color: var(--line-strong); max-width: 520px;">
+        <svg class="icon" aria-hidden="true" style="color: var(--ink-faint)"><use href="#i-search" /></svg>
+        <input type="search" name="q" value="<%= query %>" placeholder="Search by name, origin, or tasting note" aria-label="Search" style="color: var(--ink); width: 100%;" />
+        <% if (activeCategory) { %><input type="hidden" name="category" value="<%= activeCategory %>" /><% } %>
+        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+      </div>
+    </form>
+
+    <div class="cat-rail" style="margin-bottom: 28px;">
+      <% categories.forEach(function (c) { %>
+        <a class="cat-pill" href="/search?category=<%= encodeURIComponent(c) %><%= query ? '&q=' + encodeURIComponent(query) : '' %>" aria-current="<%= activeCategory === c %>"><%= c %></a>
+      <% }) %>
+    </div>
+
+    <% if (failed) { %>
+      <div class="alert alert-error">We couldn't run that search. Try adjusting your filters.</div>
+    <% } %>
+
+    <% if (products.length) { %>
+      <div class="product-grid">
+        <% products.forEach(function (product) { %>
+          <%- include('partials/product-card', { product }) %>
+        <% }) %>
+      </div>
+    <% } else if (!failed) { %>
+      <div class="empty">
+        <svg class="bean icon" aria-hidden="true"><use href="#i-bean" /></svg>
+        <h3>Nothing matched that</h3>
+        <p>We couldn't find any coffee or gear for that search. Try a broader term or browse the full shelf.</p>
+        <a class="btn btn-ghost" href="/products">Browse everything</a>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

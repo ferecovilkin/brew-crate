@@ -1,0 +1,54 @@
+<%- include('../partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / <a href="/admin">Admin</a> / Import</nav>
+  <h1>Import catalog</h1>
+  <p>Paste a supplier product feed. We'll parse it and show a preview before anything is saved.</p>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap" style="max-width: 820px;">
+    <div class="panel">
+      <form action="/admin/import" method="post">
+        <div class="field">
+          <label for="feed">Supplier XML feed</label>
+          <textarea id="feed" name="feed" style="min-height: 220px; font-family: ui-monospace, monospace; font-size: 0.86rem;" placeholder="&lt;catalog&gt;&#10;  &lt;product&gt;&#10;    &lt;name&gt;Example Roast&lt;/name&gt;&#10;    &lt;origin&gt;Peru&lt;/origin&gt;&#10;    &lt;price_cents&gt;1600&lt;/price_cents&gt;&#10;  &lt;/product&gt;&#10;&lt;/catalog&gt;"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin-top: 12px;">Parse feed</button>
+      </form>
+    </div>
+
+    <% if (error) { %>
+      <div class="alert alert-error" style="margin-top: 20px;">Could not parse that feed: <%= error %></div>
+    <% } %>
+
+    <% if (result) { %>
+      <div class="panel" style="margin-top: 20px;">
+        <h3 class="mt-0">Preview — <%= result.length %> product(s)</h3>
+        <% if (result.length) { %>
+          <div class="table-wrap" style="border:0;box-shadow:none;">
+            <table class="data">
+              <thead><tr><th>Name</th><th>Origin</th><th>Roast</th><th>Category</th><th>Price</th><th>Description</th></tr></thead>
+              <tbody>
+                <% result.forEach(function (p) { %>
+                  <tr>
+                    <td style="white-space:normal;"><%= p.name %></td>
+                    <td style="white-space:normal;"><%= p.origin %></td>
+                    <td><%= p.roast %></td>
+                    <td><%= p.category %></td>
+                    <td class="mono">$<%= (p.price_cents / 100).toFixed(2) %></td>
+                    <td style="white-space:normal;"><%= p.description %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } else { %>
+          <p class="muted">No &lt;product&gt; entries were found in that feed.</p>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,59 @@
+<%- include('partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / Account</nav>
+  <h1>Hi, <%= currentUser.username %></h1>
+  <p>
+    <span class="badge-role badge-<%= currentUser.role === 'admin' ? 'admin' : 'customer' %>"><%= currentUser.role %></span>
+    &nbsp;<%= currentUser.email %>
+  </p>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap cart-layout">
+    <div class="panel">
+      <div class="section-head" style="margin-bottom: 16px;">
+        <h2 style="margin:0;">Order history</h2>
+      </div>
+      <% if (orders.length) { %>
+        <div class="table-wrap" style="border:0;box-shadow:none;">
+          <table class="data">
+            <thead><tr><th>Reference</th><th>Date</th><th>Status</th><th>Total</th><th></th></tr></thead>
+            <tbody>
+              <% orders.forEach(function (o) { %>
+                <tr>
+                  <td class="mono"><%= o.reference %></td>
+                  <td><%= o.created_at %></td>
+                  <td><span class="chip"><%= o.status %></span></td>
+                  <td class="mono">$<%= (o.total_cents / 100).toFixed(2) %></td>
+                  <td><a href="/orders/<%= o.id %>">View</a></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } else { %>
+        <div class="empty" style="padding: 40px 20px;">
+          <svg class="bean icon" aria-hidden="true"><use href="#i-box" /></svg>
+          <h3>No orders yet</h3>
+          <p>When you place an order it'll appear here with a receipt.</p>
+          <a class="btn btn-primary" href="/products">Browse coffee</a>
+        </div>
+      <% } %>
+    </div>
+
+    <aside class="panel">
+      <h3 class="mt-0">Profile</h3>
+      <p class="muted">Update your public details or sign out.</p>
+      <div class="stack-sm">
+        <a class="btn btn-ghost btn-block" href="/account/profile">Edit profile</a>
+        <a class="btn btn-ghost btn-block" href="/u/<%= currentUser.username %>">View public profile</a>
+        <form action="/logout" method="post">
+          <button class="btn btn-dark btn-block" type="submit">Sign out</button>
+        </form>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

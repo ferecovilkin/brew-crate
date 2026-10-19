@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / Ask BrewBot</nav>
+  <h1>Ask BrewBot</h1>
+  <p>Not sure what to order? Tell our shop assistant what you like and it'll point you to a bag.</p>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap" style="max-width: 680px;">
+    <div class="panel">
+      <% if (!enabled) { %>
+        <div class="alert alert-info">BrewBot is running in offline mode. Set an API key to enable full answers.</div>
+      <% } %>
+      <% if (history.length) { %>
+        <div class="chat">
+          <% history.forEach(function (m) { %>
+            <div class="bubble <%= m.role %>"><%= m.text %></div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="empty" style="padding: 36px 20px;">
+          <svg class="bean icon" aria-hidden="true"><use href="#i-steam" /></svg>
+          <h3>Start a conversation</h3>
+          <p>Ask something like &ldquo;I want a sweet, chocolatey espresso&rdquo; or &ldquo;what's good for cold brew?&rdquo;</p>
+        </div>
+      <% } %>
+      <form action="/assistant" method="post" style="display:flex;gap:10px;margin-top:8px;">
+        <input type="text" name="message" placeholder="Ask about coffee, roasts, or gear…" aria-label="Message" style="flex:1;" autofocus />
+        <button class="btn btn-primary" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

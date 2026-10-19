@@ -1,0 +1,54 @@
+<%- include('../partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / <a href="/admin">Admin</a> / Products</nav>
+  <h1>Manage products</h1>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap">
+    <% if (notice) { %>
+      <div class="alert alert-<%= notice.kind === 'ok' ? 'ok' : 'error' %>"><%= notice.text %></div>
+    <% } %>
+
+    <div class="panel" style="margin-bottom: 24px;">
+      <h3 class="mt-0">Refresh product image</h3>
+      <p class="muted">Pull a product photo from a supplier URL and attach it to a listing.</p>
+      <form action="/admin/products/image" method="post" class="form-grid" style="grid-template-columns: 1fr 2fr auto; align-items: end; gap: 14px;">
+        <div class="field">
+          <label for="productId">Product</label>
+          <select id="productId" name="productId">
+            <% products.forEach(function (p) { %>
+              <option value="<%= p.id %>"><%= p.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="field">
+          <label for="imageUrl">Image URL</label>
+          <input type="url" id="imageUrl" name="imageUrl" placeholder="https://supplier.example/photo.jpg" />
+        </div>
+        <button class="btn btn-primary" type="submit">Fetch image</button>
+      </form>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Image</th></tr></thead>
+        <tbody>
+          <% products.forEach(function (p) { %>
+            <tr>
+              <td class="mono"><%= p.id %></td>
+              <td style="white-space:normal;"><%= p.name %></td>
+              <td><%= p.category %></td>
+              <td class="mono">$<%= (p.price_cents / 100).toFixed(2) %></td>
+              <td class="mono"><%= p.stock %></td>
+              <td class="muted" style="font-size:0.82rem;"><%= p.image_url %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / <a href="/admin">Admin</a> / Packing slips</nav>
+  <h1>Packing slip template</h1>
+  <p>Edit the printed slip and preview it with sample order data.</p>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap" style="max-width: 820px;">
+    <div class="panel">
+      <form action="/admin/templates/preview" method="post">
+        <div class="field">
+          <label for="template">Template</label>
+          <textarea id="template" name="template" style="min-height: 180px; font-family: ui-monospace, monospace; font-size: 0.86rem;" placeholder="Thanks <%%= customer %>! Order <%%= order.reference %> — <%%= order.total %>"><%= template %></textarea>
+          <p class="hint">Available fields: shop, customer, order.reference, order.total</p>
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin-top: 12px;">Render preview</button>
+      </form>
+    </div>
+
+    <% if (error) { %>
+      <div class="alert alert-error" style="margin-top: 20px;"><%= error %></div>
+    <% } %>
+
+    <% if (rendered !== null) { %>
+      <div class="panel" style="margin-top: 20px;">
+        <h3 class="mt-0">Rendered slip</h3>
+        <pre><%= rendered %></pre>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

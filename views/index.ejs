@@ -1,0 +1,54 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-tag"><svg class="icon" aria-hidden="true"><use href="#i-bean" /></svg> Roasted this week</span>
+      <h1>Coffee worth clearing your morning for.</h1>
+      <p class="lead">We roast single-origin lots and small-batch blends to order, then pack them in a crate and ship within days. No warehouse shelf, no stale beans.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="/products">Shop the roastery <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+        <a class="btn btn-ghost" href="/search?category=Equipment">Browse brewing gear</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <svg class="steam icon" aria-hidden="true"><use href="#i-steam" /></svg>
+      <h3>The Crate Sampler</h3>
+      <p>Four rotating 100g bags, chosen by the roaster. The easiest way to find your next daily cup.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>This week's lineup</h2>
+        <p>Fresh off the roaster and ready to ship.</p>
+      </div>
+      <a href="/products">View all <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+    </div>
+    <div class="product-grid">
+      <% featured.forEach(function (product) { %>
+        <%- include('partials/product-card', { product }) %>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div><h2>Shop by category</h2></div>
+    </div>
+    <div class="cat-rail">
+      <% categories.forEach(function (c) { %>
+        <a class="cat-pill" href="/search?category=<%= encodeURIComponent(c.category) %>">
+          <%= c.category %> <span class="count"><%= c.count %></span>
+        </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<section class="section" style="padding-top: 56px;">
+  <div class="wrap">
+    <div class="auth-card panel">
+      <h1 style="font-size: 1.9rem;">Welcome back</h1>
+      <p class="muted">Sign in to track orders and leave reviews.</p>
+      <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+      <form action="/login" method="post" class="form-grid" style="margin-top: 8px;">
+        <input type="hidden" name="next" value="<%= next %>" />
+        <div class="field">
+          <label for="username">Username or email</label>
+          <input type="text" id="username" name="username" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="current-password" required />
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+      <p class="muted center" style="margin: 18px 0 0;">New here? <a href="/register">Create an account</a></p>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

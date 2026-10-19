@@ -1,0 +1,9 @@
+BrewCrate - Receipt
+===================
+Order BC-SAMPLE1
+Ship to: BrewCrate Roastery, 1 Loading Dock, Warehouse District
+
+2 x Highland Dawn  @ $18.50
+1 x Daybreak Pour-Over Dripper  @ $24.00
+
+TOTAL: $61.00

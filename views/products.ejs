@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / Shop</nav>
+  <h1>The full shelf</h1>
+  <p>Every coffee and every piece of gear we currently have in the roastery.</p>
+</div>
+
+<section class="section" style="padding-top: 20px;">
+  <div class="wrap">
+    <div class="cat-rail" style="margin-bottom: 28px;">
+      <a class="cat-pill" href="/products" aria-current="<%= !activeCategory %>">All</a>
+      <% categories.forEach(function (c) { %>
+        <a class="cat-pill" href="/search?category=<%= encodeURIComponent(c) %>" aria-current="<%= activeCategory === c %>"><%= c %></a>
+      <% }) %>
+    </div>
+    <div class="product-grid">
+      <% products.forEach(function (product) { %>
+        <%- include('partials/product-card', { product }) %>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

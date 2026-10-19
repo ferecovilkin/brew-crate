@@ -1,0 +1,18 @@
+<article class="product-card">
+  <a class="product-thumb" href="/product/<%= product.slug %>" aria-label="<%= product.name %>">
+    <% if (product.image_url && product.image_url !== '/img/placeholder.svg') { %>
+      <img src="<%= product.image_url %>" alt="<%= product.name %>" loading="lazy" />
+    <% } else { %>
+      <svg class="bean icon" aria-hidden="true"><use href="#i-bean" /></svg>
+    <% } %>
+  </a>
+  <div class="product-body">
+    <span class="product-origin"><%= product.origin %></span>
+    <h3><a href="/product/<%= product.slug %>"><%= product.name %></a></h3>
+    <p class="product-tasting"><%= product.tasting %></p>
+    <div class="product-foot">
+      <span class="price">$<%= (product.price_cents / 100).toFixed(2) %></span>
+      <span class="chip"><%= product.roast === 'N/A' ? product.category : product.roast %></span>
+    </div>
+  </div>
+</article>

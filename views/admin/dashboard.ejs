@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / Admin</nav>
+  <h1>Operations dashboard</h1>
+  <p>A quick read on the roastery.</p>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap">
+    <div class="stat-row">
+      <div class="stat"><div class="n"><%= stats.products %></div><div class="l">Products</div></div>
+      <div class="stat"><div class="n"><%= stats.orders %></div><div class="l">Orders</div></div>
+      <div class="stat"><div class="n"><%= stats.users %></div><div class="l">Members</div></div>
+      <div class="stat"><div class="n">$<%= (stats.revenue / 100).toFixed(2) %></div><div class="l">Revenue</div></div>
+    </div>
+
+    <div class="product-grid" style="margin-top: 28px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+      <a class="panel" href="/admin/products" style="text-decoration:none;color:inherit;">
+        <h3 class="mt-0">Products</h3>
+        <p class="muted" style="margin:0;">Edit the catalog and refresh product imagery.</p>
+      </a>
+      <a class="panel" href="/admin/orders" style="text-decoration:none;color:inherit;">
+        <h3 class="mt-0">Order report</h3>
+        <p class="muted" style="margin:0;">Every order placed through the shop.</p>
+      </a>
+      <a class="panel" href="/admin/users" style="text-decoration:none;color:inherit;">
+        <h3 class="mt-0">Members</h3>
+        <p class="muted" style="margin:0;">The team and customer directory.</p>
+      </a>
+      <a class="panel" href="/admin/import" style="text-decoration:none;color:inherit;">
+        <h3 class="mt-0">Import catalog</h3>
+        <p class="muted" style="margin:0;">Bulk-load products from a supplier XML feed.</p>
+      </a>
+      <a class="panel" href="/admin/templates" style="text-decoration:none;color:inherit;">
+        <h3 class="mt-0">Packing slips</h3>
+        <p class="muted" style="margin:0;">Preview the printed slip template.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

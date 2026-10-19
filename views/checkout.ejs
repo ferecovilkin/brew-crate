@@ -1,0 +1,40 @@
+<%- include('partials/header') %>
+
+<div class="wrap page-head">
+  <nav class="breadcrumb"><a href="/">Home</a> / <a href="/cart">Cart</a> / Checkout</nav>
+  <h1>Checkout</h1>
+</div>
+
+<section class="section" style="padding-top: 16px;">
+  <div class="wrap cart-layout">
+    <div class="panel">
+      <h3 class="mt-0">Shipping details</h3>
+      <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+      <form action="/checkout" method="post" class="form-grid">
+        <div class="field">
+          <label for="ship_name">Full name</label>
+          <input type="text" id="ship_name" name="ship_name" value="<%= currentUser.username %>" required />
+        </div>
+        <div class="field">
+          <label for="ship_address">Shipping address</label>
+          <textarea id="ship_address" name="ship_address" placeholder="Street, city, postal code" required></textarea>
+        </div>
+        <div class="field">
+          <label for="card">Card number</label>
+          <input type="text" id="card" name="card" placeholder="4242 4242 4242 4242" inputmode="numeric" />
+          <p class="hint">Sandbox build — no real payment is processed.</p>
+        </div>
+        <button class="btn btn-primary" type="submit">Place order</button>
+      </form>
+    </div>
+    <aside class="panel summary">
+      <h3 class="mt-0">Your crate</h3>
+      <% lines.forEach(function (line) { %>
+        <div class="row"><span><%= line.quantity %> × <%= line.product.name %></span><span>$<%= (line.subtotal / 100).toFixed(2) %></span></div>
+      <% }) %>
+      <div class="row total"><span>Total</span><span>$<%= (total / 100).toFixed(2) %></span></div>
+    </aside>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

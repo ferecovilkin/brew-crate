@@ -1,0 +1,33 @@
+{
+  "name": "brew-crate",
+  "version": "1.0.0",
+  "description": "BrewCrate - an intentionally vulnerable artisan coffee roastery shop for web security training and pentest practice.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node db/seed.js"
+  },
+  "keywords": [
+    "security-training",
+    "ctf",
+    "pentest-lab",
+    "owasp",
+    "appsec",
+    "express",
+    "ejs",
+    "sqlite"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "graphql": "^16.9.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
