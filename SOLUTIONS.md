@@ -287,6 +287,28 @@ small chain), **Hard** (deeper route, less obvious, or multi-step).
   (`path.basename`, or check `resolved.startsWith(INVOICES_DIR)`), and only serve
   invoices the user owns.
 
+## 22. Open Redirect — post-login `next` parameter (Medium)
+
+- **Location:** `routes/auth.js` → `GET /login` (reflects `next` into the form)
+  and `POST /login` (`res.redirect(next)` after a successful sign-in).
+- **Cause:** The `next` value is taken from the request and used as the redirect
+  target verbatim, with no check that it points to a local (same-site) path.
+- **Exploit:** Send a victim a link to the real site that bounces them to an
+  attacker page once they log in:
+  ```
+  http://127.0.0.1:3000/login?next=https://evil.test/phish
+  ```
+  After the victim authenticates, they are redirected to `evil.test` — useful
+  for phishing or for stealing a one-time token appended to the landing page.
+- **Fix:** Only allow same-site relative paths. Reject values that are absolute
+  URLs or start with `//`, and fall back to `/account`:
+  ```js
+  const dest = typeof next === 'string' && next.startsWith('/') && !next.startsWith('//')
+    ? next
+    : '/account';
+  res.redirect(dest);
+  ```
+
 ## Bonus — Prompt Injection (Medium)
 
 - **Location:** `routes/assistant.js` → `POST /assistant`
