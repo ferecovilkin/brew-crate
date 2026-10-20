@@ -67,19 +67,24 @@ pentest VMs.
 > Requires [Docker](https://docs.docker.com/get-docker/).
 
 ```bash
-docker compose up --build
+docker build -t brewcrate .
+docker run --rm -p 127.0.0.1:3000:3000 brewcrate
 ```
 
 Then open **http://127.0.0.1:3000**. The database is seeded while the image
 builds, so every run starts clean.
 
 <details>
-<summary>Prefer plain <code>docker</code> without Compose?</summary>
+<summary>Prefer Docker Compose?</summary>
 
 ```bash
-docker build -t brewcrate .
-docker run --rm -p 127.0.0.1:3000:3000 brewcrate
+docker compose up --build      # Docker with the Compose v2 plugin
+docker-compose up --build      # older Docker (Compose v1, note the hyphen)
 ```
+
+If you get `unknown flag: --build`, your Docker lacks the Compose plugin —
+use the `docker build` / `docker run` commands above, or install it with
+`apt-get install -y docker-compose-plugin`.
 
 </details>
 
@@ -95,8 +100,8 @@ npm start
 That's it. The demo database and the native SQLite engine are both set up
 automatically on first launch. Now open **http://127.0.0.1:3000**.
 
-> 🔁 **Reset the lab** to a clean state any time: rebuild the image (Docker), or
-> run `npm run seed` (Node).
+> 🔁 **Reset the lab** to a clean state any time: re-run the container (Docker),
+> or run `npm run seed` (Node).
 
 By default the server binds to `127.0.0.1` only. Override the host and port with
 the `HOST` and `PORT` environment variables.
@@ -177,6 +182,7 @@ If no key is set, the app still runs fine — it never crashes over a missing ke
 | Empty shop or database errors | Run `npm run seed` to rebuild the demo data |
 | `Could not locate the bindings file` / install scripts "blocked" or "not covered by allowScripts" (common on Kali) | Your npm skipped `better-sqlite3`'s native build. Rebuild it: `npm rebuild better-sqlite3` — then `npm start`. If that's also blocked, run via **Docker** instead. |
 | `better-sqlite3` build errors | Install build tools (`apt install -y python3 make g++`, or on Windows use Node 20 LTS), or just run via Docker |
+| `docker compose` → `unknown flag: --build` | Your Docker has no Compose plugin. Use `docker build` + `docker run` (above), or install it: `apt install -y docker-compose-plugin` |
 
 ---
 
