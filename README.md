@@ -48,7 +48,7 @@ of toy puzzles.
 
 ## Quick start
 
-You need **either Node.js or Docker** — not both. Then grab the code:
+You need **either Docker or Node.js** — not both. Then grab the code:
 
 ```bash
 git clone https://github.com/ferecovilkin/brew-crate.git
@@ -58,19 +58,11 @@ cd brew-crate
 > No Git? Click the green **Code** button on GitHub → **Download ZIP**, unzip it,
 > and open a terminal in the `brew-crate` folder.
 
-### Option A — Node.js
+### Option A — Docker ✅ *(recommended)*
 
-> Requires [Node.js](https://nodejs.org/) 18+ (20 LTS recommended).
-
-```bash
-npm install
-npm start
-```
-
-That's it. The demo database is created automatically on first launch.
-Now open **http://127.0.0.1:3000**.
-
-### Option B — Docker
+The simplest, most reliable way — everything builds inside the container, so
+there's nothing to install or compile on your machine. Ideal for Kali and other
+pentest VMs.
 
 > Requires [Docker](https://docs.docker.com/get-docker/).
 
@@ -91,8 +83,20 @@ docker run --rm -p 127.0.0.1:3000:3000 brewcrate
 
 </details>
 
-> 🔁 **Reset the lab** to a clean state any time with `npm run seed`
-> (Node), or just rebuild the image (Docker).
+### Option B — Node.js
+
+> Requires [Node.js](https://nodejs.org/) 18+ (20 LTS recommended).
+
+```bash
+npm install
+npm start
+```
+
+That's it. The demo database and the native SQLite engine are both set up
+automatically on first launch. Now open **http://127.0.0.1:3000**.
+
+> 🔁 **Reset the lab** to a clean state any time: rebuild the image (Docker), or
+> run `npm run seed` (Node).
 
 By default the server binds to `127.0.0.1` only. Override the host and port with
 the `HOST` and `PORT` environment variables.
