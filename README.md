@@ -171,7 +171,8 @@ If no key is set, the app still runs fine — it never crashes over a missing ke
 | Port 3000 already in use (`EADDRINUSE`) | Pick another port: `PORT=3001 npm start` (PowerShell: `$env:PORT=3001; npm start`), or `-p 127.0.0.1:3001:3000` for Docker |
 | `Cannot find module ...` | Run `npm install` first |
 | Empty shop or database errors | Run `npm run seed` to rebuild the demo data |
-| `better-sqlite3` build errors | Use Node 20 LTS, or run via Docker instead |
+| `Could not locate the bindings file` / install scripts "blocked" or "not covered by allowScripts" (common on Kali) | Your npm skipped `better-sqlite3`'s native build. Rebuild it: `npm rebuild better-sqlite3` — then `npm start`. If that's also blocked, run via **Docker** instead. |
+| `better-sqlite3` build errors | Install build tools (`apt install -y python3 make g++`, or on Windows use Node 20 LTS), or just run via Docker |
 
 ---
 
