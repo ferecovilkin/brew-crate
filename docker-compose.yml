@@ -1,0 +1,8 @@
+services:
+  brewcrate:
+    build: .
+    image: brewcrate
+    # Bound to localhost only - this app is intentionally vulnerable.
+    ports:
+      - "127.0.0.1:3000:3000"
+    restart: unless-stopped

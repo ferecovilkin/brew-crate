@@ -78,16 +78,36 @@ injection, server-side request and template abuse, and business-logic attacks.
 
 ## Getting started
 
-### Run locally
+### Prerequisites
+
+| Tool | Needed for | Check with |
+| ---- | ---------- | ---------- |
+| [Git](https://git-scm.com/downloads) | cloning the repo | `git --version` |
+| [Node.js](https://nodejs.org/) 18 or newer (20 LTS recommended) | running locally | `node -v` |
+| [Docker](https://docs.docker.com/get-docker/) | running in a container (alternative to Node) | `docker --version` |
+
+You only need Node.js **or** Docker, not both.
+
+### 1. Get the code
 
 ```bash
-# 1. Install dependencies
+git clone https://github.com/ferecovilkin/brew-crate.git
+cd brew-crate
+```
+
+No Git? Download the ZIP from the green **Code** button on GitHub, unzip it, and
+open a terminal in the extracted `brew-crate` folder.
+
+### 2a. Run locally (Node.js)
+
+```bash
+# Install dependencies
 npm install
 
-# 2. Build the SQLite database with demo data
+# Build the SQLite database with demo data
 npm run seed
 
-# 3. Start the server
+# Start the server
 npm start
 ```
 
@@ -96,7 +116,14 @@ Then open **http://127.0.0.1:3000**.
 By default the server binds to `127.0.0.1` only. You can override the host/port
 with the `HOST` and `PORT` environment variables.
 
-### Run with Docker
+To reset the lab to a clean state at any time, stop the server and run
+`npm run seed` again.
+
+> **Windows:** the commands above work unchanged in PowerShell or Git Bash. If
+> `npm install` fails building `better-sqlite3`, use Node 20 LTS (it ships a
+> prebuilt binary) or use the Docker route below.
+
+### 2b. Run with Docker
 
 ```bash
 # Build the image
@@ -105,6 +132,24 @@ docker build -t brewcrate .
 # Run it, bound to localhost only
 docker run --rm -p 127.0.0.1:3000:3000 brewcrate
 ```
+
+Or with Docker Compose (build + run in one step):
+
+```bash
+docker compose up --build
+```
+
+Then open **http://127.0.0.1:3000**. The database is seeded during the image
+build, so each fresh `docker run` starts from a clean state.
+
+### Troubleshooting
+
+| Problem | Fix |
+| ------- | --- |
+| `EADDRINUSE` / port 3000 already used | Use another port: `PORT=3001 npm start` (PowerShell: `$env:PORT=3001; npm start`) or `-p 127.0.0.1:3001:3000` for Docker |
+| `Cannot find module ...` | Run `npm install` first |
+| Empty shop / database errors | Run `npm run seed` |
+| `better-sqlite3` build errors | Switch to Node 20 LTS, or use Docker |
 
 ### Optional: enable the AI assistant
 
